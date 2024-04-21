@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, Box, ThemeProvider, createTheme } from '@mui/material';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'; // Import Navigate
-import { useAuth } from './FirebaseAuthProvider';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';

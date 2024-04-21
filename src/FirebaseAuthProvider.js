@@ -1,5 +1,5 @@
 // FirebaseAuthProvider.js
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { getAuth } from 'firebase/auth';
 import app from './firebaseConfig'; // Import Firebase app instance
 
