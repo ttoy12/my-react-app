@@ -24,7 +24,7 @@ const SignUp = () => {
 
   return (
     <Box sx={{ marginLeft: 2, marginRight: 2 }}>
-      <Typography variant="h2" gutterBottom>
+      <Typography variant="h2" >
         Sign Up
       </Typography>
       <TextField
