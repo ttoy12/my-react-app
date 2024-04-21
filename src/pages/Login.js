@@ -1,9 +1,9 @@
-// Login.js
 import React, { useState } from 'react';
-import { Button, Typography, Box, TextField } from '@mui/material';
+import { Button, Typography, Box, TextField, Card, Stack } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import { signInWithEmailAndPassword } from 'firebase/auth'; // Import signInWithEmailAndPassword
 import { getAuth } from 'firebase/auth'; // Import getAuth
+import RestaurantMenuOutlinedIcon from '@mui/icons-material/RestaurantMenuOutlined';
 
 const Login = ({ onLogin }) => {
   const [email, setEmail] = useState('');
@@ -26,34 +26,53 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <Box sx={{ marginLeft: 2, marginRight: 2 }}>
-      <Typography variant="h2" >
-        Login
-      </Typography>
-      <TextField
-        label="Email"
-        variant="outlined"
-        fullWidth
-        margin="normal"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <TextField
-        label="Password"
-        variant="outlined"
-        type="password"
-        fullWidth
-        margin="normal"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-      <Button variant="contained" color="primary" onClick={handleLogin}>
-        Login
-      </Button>
-      <Typography variant="body1" gutterBottom>
-        Don't have an account? <Link to="/signup">Sign Up</Link>
-      </Typography>
+    <Box
+      sx={{
+        backgroundColor: '#f5f5f5',
+        minHeight: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        width: '100vw', // Make Box component cover entire viewport width
+        position: 'fixed', // Fix the position of the Box component
+        top: 0, // Position from top
+        left: 0, // Position from left
+      }}
+    >
+      <Card sx={{ padding: '20px', width: '100%', maxWidth: '400px' }}>
+        <Stack direction="row" alignItems="center" marginBottom={2}>
+          <Typography variant="h3">
+            Recipe Helper
+            {/* Gemini Eats */}
+          </Typography>
+          <RestaurantMenuOutlinedIcon style={{ fontSize: '3.5rem', paddingLeft: '10px' }} />
+        </Stack>
+        <Typography variant="h6" color={'gray'}>Sign in to continue.</Typography>
+        <TextField
+          label="Email"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <TextField
+          label="Password"
+          variant="outlined"
+          type="password"
+          fullWidth
+          margin="normal"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        {error && <p style={{ color: 'red', marginBottom: '10px' }}>{error}</p>}
+        <Button variant="contained" color="primary" onClick={handleLogin} style={{ marginTop: '10px', marginBottom: '10px' }}>
+          Login
+        </Button>
+        <Typography variant="body1" gutterBottom>
+          Don't have an account? <Link to="/signup">Sign Up</Link>
+        </Typography>
+      </Card>
     </Box>
   );
 }

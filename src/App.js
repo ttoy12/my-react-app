@@ -1,6 +1,6 @@
 // src/App.js
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, Box, ThemeProvider, createTheme } from '@mui/material';
+import { Box, ThemeProvider, createTheme } from '@mui/material';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'; // Import Navigate
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -21,16 +21,16 @@ function App() {
       <Router>
         <AuthProvider>
           <Box sx={{
-              p: 0,
-              m: -1,
-              width: '100vw',
-              height: '100vh'
+              backgroundColor: '#f5f5f5',
+              minHeight: '100vh',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              width: '100vw', // Make Box component cover entire viewport width
+              position: 'fixed', // Fix the position of the Box component
+              top: 0, // Position from top
+              left: 0, // Position from left
             }}>
-            <AppBar position="static">
-              <Toolbar>
-                <Typography variant="h6">LA Hacks</Typography>
-              </Toolbar>
-            </AppBar>
             <Routes>
               <Route path="/" element={<Login onLogin={handleLogin} />} />
               <Route path="/signup" element={<SignUp />} />

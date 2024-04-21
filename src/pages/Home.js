@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Typography, Button, Box, Stack, CircularProgress } from '@mui/material';
+import { Typography, Button, Box, Stack, CircularProgress, Card } from '@mui/material';
 import { useAuth } from '../FirebaseAuthProvider';
 import { signOut } from 'firebase/auth';
 import { getAuth } from 'firebase/auth';
@@ -40,6 +40,11 @@ const Home = () => {
     };
   }
 
+  const clearImageAndText = () => {
+    setSelectedImage(null);
+    setGeneratedText(null);
+  };
+
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return; // Handle no file selected case (optional)
@@ -62,7 +67,7 @@ const Home = () => {
     // For text-and-images input (multimodal), use the gemini-pro-vision model
     const model = genAI.getGenerativeModel({ model: "gemini-pro-vision" });
 
-    const prompt = "I have the ingredients above. Not sure what to cook for lunch. Show me a list of foods with the recipes.";
+    const prompt = "I have the ingredients above. Not sure what to cook for lunch. Show me a list of recipes using these foods and how to make them.";
 
     const imageParts = await fileToGenerativePart(file);
 
@@ -80,12 +85,12 @@ const Home = () => {
     <>
       {currentUser ? (
         <Box sx={{ marginLeft: 2, marginRight: 2 }}>
-          <Stack direction={'row'} sx={{ justifyContent: 'space-between' }}>
-            <Typography variant="h4">Welcome {currentUser.email}</Typography>
+          <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
             <Button variant="contained" color="primary" onClick={handleLogout}>
               Logout
             </Button>
-          </Stack>
+          </Box>
+          <Typography variant="h4" textAlign="center">Welcome {currentUser.email}</Typography>
           <Typography variant="h5" sx={{ textAlign: 'center', marginBottom: 2 }}>
             Upload an image of food ingredients and recipes will be displayed
           </Typography>
@@ -100,6 +105,11 @@ const Home = () => {
             <Button variant="contained" color="primary" onClick={handleUpload}>
               Upload Photo
             </Button>
+            {selectedImage && (
+              <Button variant="contained" sx={{ backgroundColor: 'red' }} onClick={clearImageAndText}>
+                Clear
+              </Button>
+            )}
           </Stack>
 
           {/* Display uploaded image if available */}
@@ -110,10 +120,9 @@ const Home = () => {
                   display: 'flex',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  width: '200px', // Adjust width and height as desired
-                  height: '200px',
-                  backgroundColor: 'gray', // Optional background color for visibility
-                  marginBottom: '10px',
+                  width: '350px', // Adjust width and height as desired
+                  height: '300px',
+                  margin: 'auto',
                 }}
               >
                 <img src={selectedImage} alt="Uploaded food image" style={{ width: '100%' }} />
@@ -123,19 +132,20 @@ const Home = () => {
                   <CircularProgress />
                 </Box>
               ) : (
-                <Box
+                <Card
                   sx={{
-                    maxHeight: '300px', // Adjust max height as desired
+                    maxHeight: '250px', // Adjust max height as desired
                     overflowY: 'auto',
                     textAlign: 'left', // Align text to the left
                     border: '2px solid black',
                     width: '60%',
-                    backgroundColor: 'gray',
                     padding: '10px',
+                    margin: 'auto',
+                    marginTop: '10px',
                   }}
                 >
                     <Typography variant="body1" dangerouslySetInnerHTML={{ __html: generatedText }} />
-                </Box>
+                </Card>
               )}
             </Box>
           )}
